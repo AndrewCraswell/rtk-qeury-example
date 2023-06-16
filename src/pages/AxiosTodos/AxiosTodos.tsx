@@ -24,6 +24,7 @@ export function AxiosTodos() {
   // Fetch the list of all todos
   async function getAllTodos() {
     setTodosLoading();
+
     TodoApi.getAllTodos()
       .then((todos) => {
         setTodos(todos.sort((a, b) => a.order - b.order));
