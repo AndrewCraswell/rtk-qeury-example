@@ -1,4 +1,5 @@
 import React from "react";
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import ReactDOM from "react-dom/client";
 import { App } from "./components/App/App";
 import {
@@ -8,6 +9,8 @@ import {
   makeStyles,
   shorthands,
 } from "@fluentui/react-components";
+import { todosApi } from "$pages/QueryTodos/todosApi";
+
 import "./index.css";
 
 const useStyles = makeStyles({
@@ -18,9 +21,11 @@ export function Root() {
   const classes = useStyles();
 
   return (
-    <FluentProvider theme={webDarkTheme} className={classes.root}>
-      <App />
-    </FluentProvider>
+    <ApiProvider api={todosApi}>
+      <FluentProvider theme={webDarkTheme} className={classes.root}>
+        <App />
+      </FluentProvider>
+    </ApiProvider>
   );
 }
 

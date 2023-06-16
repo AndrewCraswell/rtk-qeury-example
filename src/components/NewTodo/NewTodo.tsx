@@ -1,18 +1,13 @@
 import { Input, Button } from "@fluentui/react-components";
 import { StackShim } from "@fluentui/react-migration-v8-v9";
 import { useState } from "react";
+import { NewTodoProps } from "./NewTodo.types";
 
-export type NewTodoProps = {
-  onAdd: (title: string) => void;
-};
-
-export function NewTodo({ onAdd }: NewTodoProps) {
+export function NewTodo({ onAdd, disabled }: NewTodoProps) {
   const [title, setTitle] = useState("");
 
   function handleSubmit(ev: React.FormEvent) {
     ev.preventDefault();
-
-    console.log("Submitted");
 
     onAdd(title);
     setTitle("");
@@ -26,7 +21,7 @@ export function NewTodo({ onAdd }: NewTodoProps) {
           onChange={(ev, data) => setTitle(data.value)}
           value={title}
         />
-        <Button appearance="primary" type="submit">
+        <Button appearance="primary" type="submit" disabled={disabled}>
           Add
         </Button>
       </StackShim>

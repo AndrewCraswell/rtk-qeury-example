@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 import { AxiosTodos } from "$pages/AxiosTodos";
 import { About } from "$pages/About";
+import { QueryTodos } from "$pages/QueryTodos";
 
 const _defaultTab = "axiosTodos";
 
@@ -31,7 +32,7 @@ export function App() {
 
       <div className={classes.container}>
         {selectedTab === "axiosTodos" && <AxiosTodos />}
-        {selectedTab === "queryTodos" && <></>}
+        {selectedTab === "queryTodos" && <QueryTodos />}
         {selectedTab === "about" && <About />}
       </div>
     </>
