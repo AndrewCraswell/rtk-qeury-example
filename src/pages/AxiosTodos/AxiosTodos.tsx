@@ -29,6 +29,8 @@ export function AxiosTodos() {
       .then((todos) => {
         setTodos(todos.sort((a, b) => a.order - b.order));
         setTodosHasData();
+
+        // Reset error states
         dismissTodosGetError();
       })
       .catch(() => {

@@ -3,7 +3,7 @@ import { ErrorProps } from "./types";
 
 export function AddTodoError({ action }: ErrorProps) {
   return (
-    <Alert intent="error" action="Retry" onClick={action}>
+    <Alert intent="error" action="Dismiss" onClick={action}>
       There was an error when trying to add the new todo.
     </Alert>
   );
