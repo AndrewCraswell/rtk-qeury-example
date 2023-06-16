@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardHeader,
-  Checkbox,
-  Body1,
-  Caption1,
-  Button,
-} from "@fluentui/react-components";
+import { Card, CardHeader, Checkbox, Body1, Caption1, Button } from "@fluentui/react-components";
 import { Delete24Regular } from "@fluentui/react-icons";
 import { StackShim } from "@fluentui/react-migration-v8-v9";
 import { TodoItemProps } from "./TodoItem.types";
@@ -31,11 +24,7 @@ export function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
         description={<Caption1 strikethrough={completed}>{title}</Caption1>}
         action={
           <StackShim horizontal>
-            <Button
-              appearance="transparent"
-              icon={<Delete24Regular />}
-              onClick={handleDelete}
-            />
+            <Button appearance="transparent" icon={<Delete24Regular />} onClick={handleDelete} />
           </StackShim>
         }
       />

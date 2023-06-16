@@ -9,10 +9,6 @@ export const useStyles = makeStyles({
       from: { transform: "translate3d(0px, 10px, 0px)" },
       to: { transform: "translate3d(0px, 0px, 0px)" },
     },
-    ...shorthands.transition(
-      "all",
-      tokens.durationSlower,
-      tokens.curveDecelerateMid
-    ),
+    ...shorthands.transition("all", tokens.durationSlower, tokens.curveDecelerateMid),
   },
 });

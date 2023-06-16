@@ -16,11 +16,7 @@ export function NewTodo({ onAdd, disabled }: NewTodoProps) {
   return (
     <form onSubmit={handleSubmit}>
       <StackShim horizontal tokens={{ childrenGap: "1rem", padding: "1rem 0" }}>
-        <Input
-          placeholder="Task description"
-          onChange={(ev, data) => setTitle(data.value)}
-          value={title}
-        />
+        <Input placeholder="Task description" onChange={(ev, data) => setTitle(data.value)} value={title} />
         <Button appearance="primary" type="submit" disabled={disabled}>
           Add
         </Button>

@@ -6,35 +6,20 @@ import { useEffect, useState } from "react";
 import { useBoolean } from "@fluentui/react-hooks";
 import { Todo } from "$models/Todo";
 import { TodoLoader } from "$components/TodoLoader";
-import { Alert } from "@fluentui/react-components/unstable";
+import { ErrorsList, AddTodoError, DeleteTodoError, GetTodosError } from "$components/Errors";
 
 export function AxiosTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   // Loading status indicators
-  const [
-    isLoadingTodos,
-    { setTrue: setTodosLoading, setFalse: setTodosLoaded },
-  ] = useBoolean(false);
+  const [isLoadingTodos, { setTrue: setTodosLoading, setFalse: setTodosLoaded }] = useBoolean(false);
   const [hasTodosData, { setTrue: setTodosHasData }] = useBoolean(false);
-  const [
-    isAddingTodo,
-    { setTrue: setAddingTodo, setFalse: setTodoDoneAdding },
-  ] = useBoolean(false);
+  const [isAddingTodo, { setTrue: setAddingTodo, setFalse: setTodoDoneAdding }] = useBoolean(false);
 
   // Error statuses
-  const [
-    hasTodosGetError,
-    { setTrue: setTodosGetError, setFalse: dismissTodosGetError },
-  ] = useBoolean(false);
-  const [
-    hasTodosAddError,
-    { setTrue: setTodosAddError, setFalse: dismissTodosAddError },
-  ] = useBoolean(false);
-  const [
-    hasTodosDeleteError,
-    { setTrue: setTodosDeleteError, setFalse: dismisTodosDeleteError },
-  ] = useBoolean(false);
+  const [hasTodosGetError, { setTrue: setTodosGetError, setFalse: dismissTodosGetError }] = useBoolean(false);
+  const [hasTodosAddError, { setTrue: setTodosAddError, setFalse: dismissTodosAddError }] = useBoolean(false);
+  const [hasTodosDeleteError, { setTrue: setTodosDeleteError, setFalse: dismisTodosDeleteError }] = useBoolean(false);
 
   // Fetch the list of all todos
   async function getAllTodos() {
@@ -43,9 +28,9 @@ export function AxiosTodos() {
       .then((todos) => {
         setTodos(todos.sort((a, b) => a.order - b.order));
         setTodosHasData();
+        dismissTodosGetError();
       })
       .catch(() => {
-        console.log("GET ERROR");
         setTodosGetError();
       })
       .finally(() => setTodosLoaded());
@@ -55,6 +40,9 @@ export function AxiosTodos() {
   function handleDelete(id: string) {
     TodoApi.deleteTodo(id)
       .then(() => {
+        // Reset error states
+        dismisTodosDeleteError();
+
         // Refetch all todos
         getAllTodos();
       })
@@ -73,6 +61,9 @@ export function AxiosTodos() {
       order: maxOrder + 1,
     })
       .then(() => {
+        // Reset error states
+        dismissTodosAddError();
+
         // Refetch all todos
         getAllTodos().finally(() => {
           setTodoDoneAdding();
@@ -99,29 +90,11 @@ export function AxiosTodos() {
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        {hasTodosGetError && (
-          <Alert intent="error" action="Dismiss" onClick={dismissTodosGetError}>
-            There was an error fetching the list of todos.
-          </Alert>
-        )}
-
-        {hasTodosAddError && (
-          <Alert intent="error" action="Dismiss" onClick={dismissTodosAddError}>
-            There was an error when trying to add the new todo.
-          </Alert>
-        )}
-
-        {hasTodosDeleteError && (
-          <Alert
-            intent="error"
-            action="Dismiss"
-            onClick={dismisTodosDeleteError}
-          >
-            There was an error when trying to delete the todo.
-          </Alert>
-        )}
-      </div>
+      <ErrorsList>
+        {hasTodosGetError && <GetTodosError action={getAllTodos} />}
+        {hasTodosAddError && <AddTodoError action={dismissTodosAddError} />}
+        {hasTodosDeleteError && <DeleteTodoError action={dismisTodosDeleteError} />}
+      </ErrorsList>
 
       <NewTodo onAdd={handleAdd} disabled={isAddingTodo} />
 
@@ -130,12 +103,7 @@ export function AxiosTodos() {
           <TodoLoader count={5} />
         ) : (
           todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onDelete={handleDelete}
-              onToggle={handleTodoStatusChange}
-            />
+            <TodoItem key={todo.id} todo={todo} onDelete={handleDelete} onToggle={handleTodoStatusChange} />
           ))
         )}
       </StackShim>

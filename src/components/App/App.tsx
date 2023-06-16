@@ -1,9 +1,4 @@
-import {
-  Tab,
-  TabList,
-  makeStyles,
-  shorthands,
-} from "@fluentui/react-components";
+import { Tab, TabList, makeStyles, shorthands } from "@fluentui/react-components";
 import { useState } from "react";
 import { AxiosTodos } from "$pages/AxiosTodos";
 import { About } from "$pages/About";
@@ -21,10 +16,7 @@ export function App() {
 
   return (
     <>
-      <TabList
-        onTabSelect={(event, tab) => setSelectedTab(tab.value as string)}
-        selectedValue={selectedTab}
-      >
+      <TabList onTabSelect={(event, tab) => setSelectedTab(tab.value as string)} selectedValue={selectedTab}>
         <Tab value="axiosTodos">Axios Todos</Tab>
         <Tab value="queryTodos">Query Todos</Tab>
         <Tab value="about">About</Tab>

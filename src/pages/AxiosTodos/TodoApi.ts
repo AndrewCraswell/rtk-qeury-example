@@ -1,8 +1,7 @@
 import { Todo } from "$models/Todo";
 import axios from "axios";
 
-const API_BASE_URL =
-  "https://csharp-todo-backend.azurewebsites.net/api/v1/todo";
+const API_BASE_URL = "https://csharp-todo-backend.azurewebsites.net/api/v1/todo";
 
 class TodoService {
   // Retrieve all todos
@@ -26,10 +25,7 @@ class TodoService {
   }
 
   // Update an existing todo
-  async updateTodo(
-    id: string,
-    updates: Partial<Omit<Todo, "id">>
-  ): Promise<Todo> {
+  async updateTodo(id: string, updates: Partial<Omit<Todo, "id">>): Promise<Todo> {
     const response = await axios.patch<Todo>(`${API_BASE_URL}/${id}`, updates, {
       headers: { "Content-Type": "application/json" },
     });
