@@ -15,8 +15,7 @@ export function QueryTodos() {
     refetch: refetchTodos,
   } = useGetAllTodosQuery();
 
-  const [addTodo, { isError: hasTodosAddError, isLoading: isAddingTodo, reset: resetAddTodo }] =
-    useCreateTodoMutation();
+  const [addTodo, { isError: hasTodosAddError, isLoading: isAddingTodo, reset: resetAddTodo }] = useCreateTodoMutation();
 
   const [deleteTodo, { isError: hasTodosDeleteError, reset: resetDeleteTodo }] = useDeleteTodoMutation();
 
@@ -30,15 +29,7 @@ export function QueryTodos() {
         {hasTodosDeleteError && <DeleteTodoError action={resetDeleteTodo} />}
       </ErrorsList>
 
-      <NewTodo
-        onAdd={(title) =>
-          addTodo({
-            title,
-            order: getNextOrderId(todos),
-          })
-        }
-        disabled={isAddingTodo}
-      />
+      <NewTodo onAdd={(title) => addTodo({ title, order: getNextOrderId(todos) })} disabled={isAddingTodo} />
 
       <StackShim tokens={{ childrenGap: "1rem" }}>
         {isLoadingTodos && !hasTodosData ? (

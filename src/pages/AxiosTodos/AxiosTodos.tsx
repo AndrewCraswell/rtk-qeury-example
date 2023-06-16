@@ -102,9 +102,7 @@ export function AxiosTodos() {
         {isLoadingTodos && !hasTodosData ? (
           <TodoLoader count={5} />
         ) : (
-          todos.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} onDelete={handleDelete} onToggle={handleTodoStatusChange} />
-          ))
+          todos.map((todo) => <TodoItem key={todo.id} todo={todo} onDelete={handleDelete} onToggle={handleTodoStatusChange} />)
         )}
       </StackShim>
     </>
